@@ -6,32 +6,29 @@
         xmlns:local="clr-namespace:ClickOnTime"
         mc:Ignorable="d"
         Title="定时点击工具  By Clubie" Height="600" Width="400">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="文件(_F)" Padding="8,2">
+                <MenuItem x:Name="menuOpen" Header="打开(_O)..." Click="Open"/>
+                <MenuItem Header="另存为(_S)..." Click="Save"/>
+            </MenuItem>
+            <MenuItem Header="编辑(_E)" Padding="8,2">
+                <MenuItem x:Name="menuAdd" Header="添加(_A)" Click="Add"/>
+                <MenuItem x:Name="menuBatch" Header="批量添加(_B)..." Click="AddBatch"/>
+                <MenuItem x:Name="menuShift" Header="平移(_S)..." Click="Shift"/>
+            </MenuItem>
+            <MenuItem Header="运行(_R)" Padding="8,2">
+                <MenuItem x:Name="menuStart" Header="开始(_S)" Click="Start"/>
+                <MenuItem x:Name="menuStop" Header="停止(_T)" Click="Stop" IsEnabled="False"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem x:Name="stbStatus" Content="编辑" Padding="10,2"/>
+            <Separator Background="#FFA0A0A0"/>
+            <StatusBarItem x:Name="stbTime" Content="当前时间：" Padding="10,2"/>
+        </StatusBar>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,5">
             <StackPanel x:Name="stpClickItem"/>
         </ScrollViewer>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="保存" Padding="5" Click="Save"/>
-            <Button x:Name="btnLoad" Grid.Column="3" Content="加载" Padding="5" Click="Load"/>
-            <Button x:Name="btnAdd" Grid.Column="5" Content="添加" Padding="5" Click="AddClickItem"/>
-            <Button x:Name="btnStartOrStop" Grid.Column="7" Content="开始" Padding="5" Click="StartOrStop"/>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </Window>

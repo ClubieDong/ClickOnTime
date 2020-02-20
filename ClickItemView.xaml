@@ -8,6 +8,7 @@
              d:DesignWidth="400">
     <Grid Margin="10,5">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="10"/>
@@ -16,12 +17,13 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="时间：" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtTime" Grid.Column="1" Padding="3" HorizontalContentAlignment="Center" ToolTip="格式：时:分:秒.毫秒" ToolTipService.InitialShowDelay="0" ToolTipService.Placement="Top" LostFocus="TimeChanged"/>
-        <TextBlock Grid.Column="3" Text="坐标：" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtPos" Grid.Column="4" Padding="3" HorizontalContentAlignment="Center" ToolTip="将鼠标移动到要点击的位置后按下空格键" ToolTipService.InitialShowDelay="0" ToolTipService.Placement="Top" KeyUp="SpaceDown" IsReadOnly="True"/>
-        <Button x:Name="btnDelete" Grid.Column="6" Padding="10,3" Content="删除" Click="Delete"/>
-        <TextBlock x:Name="tbWaiting" Grid.Column="6" Text="等待中" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFF06212" Visibility="Hidden"/>
-        <TextBlock x:Name="tbFinished" Grid.Column="6" Text="已点击" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF2CAA38" Visibility="Hidden"/>
+        <TextBlock x:Name="tbID" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Text="时间：" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtTime" Grid.Column="2" Padding="3" HorizontalContentAlignment="Center" ToolTip="格式：时:分:秒.毫秒" ToolTipService.InitialShowDelay="0" ToolTipService.Placement="Top" LostFocus="TimeChanged"/>
+        <TextBlock Grid.Column="4" Text="坐标：" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtPos" Grid.Column="5" Padding="3" HorizontalContentAlignment="Center" ToolTip="将鼠标移动到要点击的位置后按下空格键" ToolTipService.InitialShowDelay="0" ToolTipService.Placement="Top" KeyUp="SpaceDown" IsReadOnly="True"/>
+        <Button x:Name="btnDelete" Grid.Column="7" Padding="10,3" Content="删除" Click="Delete"/>
+        <TextBlock x:Name="tbWaiting" Grid.Column="7" Text="等待中" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFF06212" Visibility="Hidden"/>
+        <TextBlock x:Name="tbFinished" Grid.Column="7" Text="已点击" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF2CAA38" Visibility="Hidden"/>
     </Grid>
 </UserControl>

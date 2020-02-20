@@ -34,35 +34,23 @@ namespace ClickOnTime
             get => Point.HasValue && Time.HasValue;
         }
         public event Action<ClickItemView> OnDelete;
+        public event Action OnFinish;
 
-        public ClickItemView(Action<ClickItemView> onDelete)
+        public ClickItemView(Action<ClickItemView> onDelete, Action onFinish, int id)
         {
             InitializeComponent();
             OnDelete += onDelete;
+            OnFinish += onFinish;
+            tbID.Text = $"No. {id + 1}";
         }
-
-        public static bool FromString(Action<ClickItemView> onDelete, string str, out ClickItemView view)
+        public ClickItemView(Action<ClickItemView> onDelete, Action onFinish, int id, DateTime time)
         {
-            view = null;
-            if (!DateTime.TryParse(str.Substring(0, 12), out DateTime time))
-                return false;
-            int commaPos = str.IndexOf(',');
-            if (!int.TryParse(str.Substring(14, commaPos - 14), out int x))
-                return false;
-            if (!int.TryParse(str.Substring(commaPos + 2, str.Length - commaPos - 3), out int y))
-                return false;
-            view = new ClickItemView(onDelete)
-            {
-                Time = time,
-                Point = new WinAPI.POINT()
-                {
-                    x = x,
-                    y = y
-                }
-            };
-            view.txtTime.Text = time.ToString("HH:mm:ss.fff");
-            view.txtPos.Text = $"({x}, {y})";
-            return true;
+            InitializeComponent();
+            OnDelete += onDelete;
+            OnFinish += onFinish;
+            tbID.Text = $"No. {id + 1}";
+            Time = time;
+            txtTime.Text = time.ToString("HH:mm:ss.fff");
         }
 
         public void Start()
@@ -74,7 +62,6 @@ namespace ClickOnTime
             IsRunning = true;
             Task.Run(Run);
         }
-
         public void Stop()
         {
             IsRunning = false;
@@ -100,6 +87,7 @@ namespace ClickOnTime
                     {
                         tbWaiting.Visibility = Visibility.Hidden;
                         tbFinished.Visibility = Visibility.Visible;
+                        OnFinish?.Invoke();
                     });
                 }
             }
@@ -146,6 +134,40 @@ namespace ClickOnTime
         public override string ToString()
         {
             return Time.Value.ToString("HH:mm:ss.fff") + $" ({Point.Value.x}, {Point.Value.y})";
+        }
+        public static bool FromString(Action<ClickItemView> onDelete, Action onFinish, int id, string str, out ClickItemView view)
+        {
+            view = null;
+            if (!DateTime.TryParse(str.Substring(0, 12), out DateTime time))
+                return false;
+            int commaPos = str.IndexOf(',');
+            if (!int.TryParse(str.Substring(14, commaPos - 14), out int x))
+                return false;
+            if (!int.TryParse(str.Substring(commaPos + 2, str.Length - commaPos - 3), out int y))
+                return false;
+            view = new ClickItemView(onDelete, onFinish, id)
+            {
+                Time = time,
+                Point = new WinAPI.POINT()
+                {
+                    x = x,
+                    y = y
+                }
+            };
+            view.txtTime.Text = time.ToString("HH:mm:ss.fff");
+            view.txtPos.Text = $"({x}, {y})";
+            return true;
+        }
+
+        public void Shift(TimeSpan time, bool advance)
+        {
+            if (!Time.HasValue)
+                return;
+            if (advance)
+                Time -= time;
+            else
+                Time += time;
+            txtTime.Text = Time.Value.ToString("HH:mm:ss.fff");
         }
     }
 }
